@@ -10,10 +10,10 @@
 		"format": "prettier -w packages/*/src"
 	},
 	"devDependencies": {
-		"ts-gleam": "file:../ts",
+		"@gleam-tools/ts": "link:../ts",
+		"@gleam-tools/vite": "link:../vite",
 		"typescript": "^5.0.2",
 		"vite": "^4.4.5",
-		"vite-gleam": "link:../vite",
 		"vite-plugin-inspect": "^0.7.38"
 	}
 }
