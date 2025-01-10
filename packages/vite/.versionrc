@@ -8,5 +8,8 @@
       "filename": "jsr.json",
       "type": "json"
     }
-  ]
+  ],
+  "skip": {
+    "tag": true
+  }
 }

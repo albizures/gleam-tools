@@ -1,6 +1,6 @@
 {
 	"name": "@gleam-tools/utils",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Common utilities for Gleam Tools",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",
@@ -32,7 +32,7 @@
 		"test:unit:dev": "vitest",
 		"test:types": "tsc --noEmit",
 		"test:jsr": "jsr publish --dry-run",
-		"release:bump": "standard-version -t v",
+		"release:bump": "standard-version",
 		"release:jsr-sync": "jsr-sync --section=exports",
 		"release:publish": "pnpm publish --access public",
 		"release": "run-s test build release:jsr-sync release:bump release:publish"
