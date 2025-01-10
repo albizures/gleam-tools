@@ -1,0 +1,19 @@
+{
+	"name": "example",
+	"type": "module",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"format": "prettier -w packages/*/src"
+	},
+	"devDependencies": {
+		"ts-gleam": "file:../ts",
+		"typescript": "^5.0.2",
+		"vite": "^4.4.5",
+		"vite-gleam": "link:../vite",
+		"vite-plugin-inspect": "^0.7.38"
+	}
+}

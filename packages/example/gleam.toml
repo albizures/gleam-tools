@@ -1,0 +1,9 @@
+name = "example"
+version = "1.0.0"
+target = "javascript"
+
+[javascript]
+typescript_declarations = true
+
+[dependencies]
+gleam_stdlib = "~> 0.30"

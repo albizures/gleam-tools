@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "name": "✨ root",
+      "path": ".."
+    },
+    {
+      "name": "📦 example",
+      "path": "../packages/example"
+    },
+    {
+      "name": "📦 vite",
+      "path": "../packages/vite"
+    },
+    {
+      "name": "📦 ts",
+      "path": "../packages/ts"
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": false,
+    "prettier.trailingComma": "all",
+    "[gleam]": {
+      "editor.defaultFormatter": "gleam.gleam"
+    },
+    "typescript.tsdk": "📦 example/node_modules/typescript/lib"
+  },
+  "extensions": {
+    "recommendations": ["gleam.gleam"]
+  }
+}

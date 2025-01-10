@@ -1,0 +1,59 @@
+{
+	"name": "@gleam-tools/vite",
+	"version": "0.0.2",
+	"description": "Import directly from *.gleam files using Vite",
+	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
+	"license": "MIT",
+	"repository": {
+		"url": "https://github.com/albizures/gleam-tools/tree/main/packages/vite"
+	},
+	"keywords": [
+		"gleam",
+		"vite",
+		"vite-plugin"
+	],
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
+	},
+	"main": "./dist/index.cjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "run-s build:*",
+		"build:dist": "unbuild",
+		"build:docs": "tsdocs",
+		"test": "run-s test:unit test:types test:jsr",
+		"test:use": "knip",
+		"test:unit": "vitest run",
+		"test:unit:dev": "vitest",
+		"test:types": "tsc --noEmit",
+		"test:jsr": "jsr publish --dry-run",
+		"release:bump": "standard-version -t v",
+		"release:jsr-sync": "jsr-sync --section=exports",
+		"release:publish": "pnpm publish --access public",
+		"release:push-tags": "git push --follow-tags origin main",
+		"release": "run-s test build release:jsr-sync release:bump release:publish release:push-tags"
+	},
+	"dependencies": {
+		"magic-string": "^0.30.17",
+		"toml": "^3.0.0",
+		"typescript": "^5.7.3",
+		"vite": "^6.0.7"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.5",
+		"@vyke/jsr-sync": "^0.0.4",
+		"@vyke/tsdocs": "^0.0.8",
+		"jsr": "^0.13.2",
+		"knip": "^5.42.0",
+		"npm-run-all": "^4.1.5",
+		"standard-version": "^9.5.0",
+		"unbuild": "^3.2.0",
+		"vitest": "^2.1.8"
+	}
+}

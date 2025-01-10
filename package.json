@@ -1,0 +1,26 @@
+{
+	"name": "@gleam-tools/monorepo",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Import directly from *.gleam files",
+	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
+	"license": "MIT",
+	"keywords": [
+		"gleam",
+		"vite",
+		"vite-plugin"
+	],
+	"scripts": {
+		"build:pkg": "pnpm -r --filter='./packages/vite' run build",
+		"build": "pnpm build:pkg",
+		"format": "prettier -w packages/*/src",
+		"dev": "pnpm -r --filter='./packages/*' run dev",
+		"prepublish": "pnpm build",
+		"publish": "pnpm publish --filter='./packages/vite'"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^3.13.0",
+		"eslint": "^9.17.0",
+		"eslint-plugin-format": "^1.0.1"
+	}
+}

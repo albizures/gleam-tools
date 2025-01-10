@@ -1,0 +1,8 @@
+{
+	"name": "@gleam-tools/utils",
+	"version": "0.0.1",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"license": "MIT"
+}
