@@ -7,6 +7,7 @@ export default antfu(
 		stylistic: {
 			indent: 'tab',
 		},
+		ignores: ['./example/build'],
 	},
 	{
 		files: ['*.ts', '*.tsx'],

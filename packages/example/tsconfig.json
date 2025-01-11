@@ -20,7 +20,7 @@
 		"noEmit": true,
 		"isolatedModules": true,
 		"skipLibCheck": true,
-		"plugins": [{ "name": "ts-gleam" }]
+		"plugins": [{ "name": "@gleam-tools/ts" }]
 	},
 	"include": ["src"]
 }

@@ -1,5 +1,6 @@
 {
 	"name": "@gleam-tools/monorepo",
+	"type": "module",
 	"version": "1.0.0",
 	"private": true,
 	"description": "Import directly from *.gleam files",
@@ -11,12 +12,7 @@
 		"vite-plugin"
 	],
 	"scripts": {
-		"build:pkg": "pnpm -r --filter='./packages/vite' run build",
-		"build": "pnpm build:pkg",
-		"format": "prettier -w packages/*/src",
-		"dev": "pnpm -r --filter='./packages/*' run dev",
-		"prepublish": "pnpm build",
-		"publish": "pnpm publish --filter='./packages/vite'"
+		"publish-all": "pnpm publish --filter='./packages/**'"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^3.13.0",
