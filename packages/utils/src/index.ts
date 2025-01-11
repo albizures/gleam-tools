@@ -8,6 +8,18 @@ import { parse } from 'toml'
 const GLEAM_REGEX = /\.gleam$/
 
 /**
+ * Assert function
+ */
+export function assert(condition: unknown, message: string, ...args: Array<unknown>): asserts condition {
+	if (!condition) {
+		if (args.length > 0) {
+			console.error(message, ...args)
+		}
+		throw new Error(message)
+	}
+}
+
+/**
  * Check if a file is a Gleam file
  */
 export function isGleamFile(fileName: string): boolean {
@@ -23,6 +35,7 @@ export type GleamConfig = {
 	}
 }
 
+const srcFolder = path.join(process.cwd(), 'src')
 const buildFolder = path.join(process.cwd(), 'build', 'dev', 'javascript')
 
 /**
@@ -38,12 +51,17 @@ export function readJsFile(gleamFilePath: string, config: GleamConfig): Promise<
  * Get the path of the JavaScript file generated from a Gleam file
  */
 export function getJsFilePath(gleamFile: string, config: GleamConfig): string {
-	let filePath = path.relative(path.resolve('.'), gleamFile.replace(GLEAM_REGEX, '.mjs'))
-	if (filePath.startsWith('src')) {
-		filePath = filePath.replace('src', config.name)
-	}
+	const srcFolderPath = `${srcFolder}${path.sep}`
 
-	return path.join(buildFolder, filePath)
+	assert(isGleamFile(gleamFile), 'Not a Gleam file: ', gleamFile)
+	assert(gleamFile.startsWith(srcFolderPath), 'Not in the src folder: ', gleamFile)
+
+	return gleamFile
+		.replace(GLEAM_REGEX, '.mjs')
+		.replace(
+			srcFolderPath,
+			`${path.join(buildFolder, config.name)}${path.sep}`,
+		)
 }
 
 /**

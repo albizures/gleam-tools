@@ -32,9 +32,10 @@
 		"test:unit:dev": "vitest",
 		"test:types": "tsc --noEmit",
 		"test:jsr": "jsr publish --dry-run",
-		"release:bump": "standard-version",
+		"release:bump": "standard-version -t utils-",
 		"release:jsr-sync": "jsr-sync --section=exports",
 		"release:publish": "pnpm publish --access public",
+		"publish:jsr": "jsr publish",
 		"release": "run-s test build release:jsr-sync release:bump release:publish"
 	},
 	"dependencies": {
