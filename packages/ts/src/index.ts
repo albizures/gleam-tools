@@ -1,6 +1,6 @@
 import process from 'node:process'
 import path from 'node:path'
-import { getDeclarationFilePath, isGleamFile, readSyncGleamConfig } from '@gleam-tools/utils'
+import { getDeclarationFilePath, getJsFilePath, isGleamFile, readSyncGleamConfig } from '@gleam-tools/utils'
 import type tsModule from 'typescript/lib/tsserverlibrary.js'
 import { getDtsSnapshot, hasDeclaration } from './utils'
 
@@ -14,11 +14,11 @@ function safeReadGleamConfig(logger: tsModule.server.Logger) {
 	}
 }
 
-export function init(modules: {
+// eslint-disable-next-line no-restricted-syntax
+export = function init(modules: {
 	typescript: typeof tsModule
 }) {
 	const ts = modules.typescript
-
 	function create(info: tsModule.server.PluginCreateInfo) {
 		const { logger } = info.project.projectService
 
@@ -38,6 +38,7 @@ export function init(modules: {
 
 		const languageService = ts.createLanguageService(languageServiceHostProxy)
 
+		logger.info('[ts-gleam] reading gleam.toml file')
 		const gleamConfig = safeReadGleamConfig(logger)
 
 		if (!gleamConfig) {
@@ -57,6 +58,7 @@ export function init(modules: {
 			if (!info.languageServiceHost.getScriptKind) {
 				return ts.ScriptKind.Unknown
 			}
+
 			if (
 				isGleamFile(fileName)
 				&& hasDeclaration(fileName, gleamConfig, logger)
@@ -71,7 +73,6 @@ export function init(modules: {
 				isGleamFile(fileName)
 				&& hasDeclaration(fileName, gleamConfig, logger)
 			) {
-				logger.info(`[ts-gleam] current: ${fileName}`)
 				const dts = getDtsSnapshot(ts, gleamConfig, fileName, logger)
 				return dts
 			}
@@ -85,12 +86,13 @@ export function init(modules: {
 					| tsModule.ResolvedModuleWithFailedLookupLocations
 					| undefined,
 			): tsModule.ResolvedModuleFull | undefined => {
-				const p = path.resolve(path.dirname(containingFile), moduleName.text)
 				if (isGleamFile(moduleName.text)) {
+					const p = path.resolve(path.dirname(containingFile), moduleName.text)
+
 					return {
 						extension: ts.Extension.Dts,
 						isExternalLibraryImport: false,
-						resolvedFileName: getDeclarationFilePath(p, gleamConfig!),
+						resolvedFileName: path.join(process.cwd(), getDeclarationFilePath(p, gleamConfig!)),
 					}
 				}
 			}
@@ -123,7 +125,6 @@ export function init(modules: {
 									containingFile,
 								),
 						)
-
 						if (resolvedModule) {
 							return { resolvedModule }
 						}
@@ -143,6 +144,8 @@ export function init(modules: {
 	function getExternalFiles(
 		project: tsModule.server.ConfiguredProject,
 	): Array<string> {
+		const { logger } = project.projectService
+		logger.info('[ts-gleam] getting external files')
 		return project.getFileNames().filter(isGleamFile)
 	}
 
