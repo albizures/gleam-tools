@@ -1,0 +1,26 @@
+{
+	"name": "gleam-ts",
+	"displayName": "Gleam TS",
+	"version": "0.0.1",
+	"description": "Support import gleam files into typescript",
+	"categories": [
+		"Extension Packs"
+	],
+	"engines": {
+		"vscode": "^1.96.0"
+	},
+	"extensionPack": [
+		"gleam.gleam"
+	],
+	"contributes": {
+		"typescriptServerPlugins": [
+			{
+				"name": "@gleam-tools/ts",
+				"enableForWorkspaceTypeScriptVersions": true
+			}
+		]
+	},
+	"dependencies": {
+		"@gleam-tools/ts": "file:../ts/gleam-tools-ts-0.0.1.tgz"
+	}
+}
