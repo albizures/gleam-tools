@@ -5,6 +5,9 @@ A collection of utilities for the Gleam Tools
 ## Usage
 
 ## API
+### assert
+Assert function
+
 ### isGleamFile
 Check if a file is a Gleam file
 
