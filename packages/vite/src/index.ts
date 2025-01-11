@@ -2,7 +2,8 @@ import process from 'node:process'
 import type { Plugin } from 'vite'
 import path from 'node:path'
 import MagicString from 'magic-string'
-import { build, getJsFilePath, ignoreBuildFolder, readGleamConfig, readJsFile } from './utils'
+import { ignoreBuildFolder } from './utils'
+import { build, getJsFilePath, readGleamConfig, readJsFile } from '@gleam-tools/utils'
 
 type GleamConfig = {
 	name: string
@@ -40,12 +41,10 @@ export function gleam(): Plugin {
 				return
 			}
 
-			importer = getJsFilePath(importer, gleamConfig!)
+			const jsImporter = getJsFilePath(importer, gleamConfig!)
 
-			const id = path.join(
-				buildFolder,
-				importer,
-				'..',
+			const id = path.resolve(
+				path.dirname(jsImporter),
 				source,
 			)
 

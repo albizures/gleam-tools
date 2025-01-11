@@ -1,5 +1,6 @@
 {
 	"name": "@gleam-tools/vite",
+	"type": "module",
 	"version": "0.0.2",
 	"description": "Import directly from *.gleam files using Vite",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
@@ -33,16 +34,17 @@
 		"test:unit:dev": "vitest",
 		"test:types": "tsc --noEmit",
 		"test:jsr": "jsr publish --dry-run",
-		"release:bump": "standard-version -t v",
+		"release:bump": "standard-version -t vite-",
 		"release:jsr-sync": "jsr-sync --section=exports",
 		"release:publish": "pnpm publish --access public",
 		"release:push-tags": "git push --follow-tags origin main",
+		"publish:jsr": "jsr publish",
 		"release": "run-s test build release:jsr-sync release:bump release:publish release:push-tags"
 	},
 	"dependencies": {
+		"@gleam-tools/utils": "file:/Users/a/projects/meh/gleam-tools/packages/utils/gleam-tools-utils-0.0.2.tgz",
 		"magic-string": "^0.30.17",
 		"toml": "^3.0.0",
-		"typescript": "^5.7.3",
 		"vite": "^6.0.7"
 	},
 	"devDependencies": {
@@ -53,6 +55,7 @@
 		"knip": "^5.42.0",
 		"npm-run-all": "^4.1.5",
 		"standard-version": "^9.5.0",
+		"typescript": "^5.7.3",
 		"unbuild": "^3.2.0",
 		"vitest": "^2.1.8"
 	}

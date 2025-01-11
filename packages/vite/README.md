@@ -22,6 +22,7 @@ export default {
 
 ## API
 
+
 ## Note
 
 By default, TypeScript (LSP) will complain about importing files with the `.gleam` extension. There are two choices for fixes:
