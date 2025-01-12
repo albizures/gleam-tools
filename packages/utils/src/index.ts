@@ -6,6 +6,7 @@ import fsSync from 'node:fs'
 import { parse } from 'toml'
 
 const GLEAM_REGEX = /\.gleam$/
+const GLEAM_JS_REGEX = /\.m?js$/
 
 /**
  * Assert function
@@ -35,8 +36,12 @@ export type GleamConfig = {
 	}
 }
 
-const srcFolder = path.join(process.cwd(), 'src')
-const buildFolder = path.join(process.cwd(), 'build', 'dev', 'javascript')
+/**
+ * Check if a file is a JavaScript file
+ */
+export function isJsFile(fileName: string): boolean {
+	return GLEAM_JS_REGEX.test(fileName)
+}
 
 /**
  * Read a Gleam file and return its content
@@ -51,6 +56,8 @@ export function readJsFile(gleamFilePath: string, config: GleamConfig): Promise<
  * Get the path of the JavaScript file generated from a Gleam file
  */
 export function getJsFilePath(gleamFile: string, config: GleamConfig): string {
+	const buildFolder = path.join(process.cwd(), 'build', 'dev', 'javascript')
+	const srcFolder = path.join(process.cwd(), 'src')
 	const srcFolderPath = `${srcFolder}${path.sep}`
 
 	assert(isGleamFile(gleamFile), 'Not a Gleam file: ', gleamFile)
