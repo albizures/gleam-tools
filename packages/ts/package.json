@@ -24,15 +24,14 @@
 		"release": "run-s test build release:bump release:publish"
 	},
 	"dependencies": {
-		"@gleam-tools/utils": "^0.0.4",
-		"typescript": "^5.7.3"
+		"@gleam-tools/utils": "^0.0.4"
 	},
 	"devDependencies": {
 		"@types/node": "^22.10.5",
 		"knip": "^5.42.0",
 		"npm-run-all": "^4.1.5",
 		"standard-version": "^9.5.0",
-		"typescript": "^5.2.2",
+		"typescript": "^5.7.3",
 		"unbuild": "^3.2.0"
 	}
 }
