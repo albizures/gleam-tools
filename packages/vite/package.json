@@ -42,7 +42,7 @@
 		"release": "run-s test build release:jsr-sync release:bump release:publish release:push-tags"
 	},
 	"dependencies": {
-		"@gleam-tools/utils": "file:/Users/a/projects/meh/gleam-tools/packages/utils/gleam-tools-utils-0.0.2.tgz",
+		"@gleam-tools/utils": "^0.0.3",
 		"magic-string": "^0.30.17",
 		"toml": "^3.0.0",
 		"vite": "^6.0.7"

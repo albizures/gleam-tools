@@ -3,7 +3,7 @@ import type { Plugin } from 'vite'
 import path from 'node:path'
 import MagicString from 'magic-string'
 import { ignoreBuildFolder } from './utils'
-import { build, getJsFilePath, readGleamConfig, readJsFile } from '@gleam-tools/utils'
+import { build, getJsFilePath, isGleamFile, readGleamConfig, readJsFile } from '@gleam-tools/utils'
 
 type GleamConfig = {
 	name: string
@@ -25,11 +25,16 @@ export function gleam(): Plugin {
 
 			await build(gleamConfig)
 		},
-		async resolveId(source, importer) {
-			if (!importer) {
+		async resolveId(source, target) {
+			if (!target) {
 				return
 			}
-			else if (source.startsWith('hex:')) {
+
+			if (source.endsWith('gleam.mjs')) {
+				console.log('source ends up with gleam.mjs, source', source, 'target', target)
+			}
+
+			if (source.startsWith('hex:')) {
 				const id = path.join(
 					buildFolder,
 					source.slice(4),
@@ -37,19 +42,17 @@ export function gleam(): Plugin {
 				return { id }
 			}
 
-			if (!importer.endsWith('.gleam') && !source.endsWith('gleam.mjs')) {
-				return
-			}
+			if (isGleamFile(target)) {
+				const jsTarget = getJsFilePath(target, gleamConfig!)
 
-			const jsImporter = getJsFilePath(importer, gleamConfig!)
+				const id = path.resolve(
+					path.dirname(jsTarget),
+					source,
+				)
 
-			const id = path.resolve(
-				path.dirname(jsImporter),
-				source,
-			)
-
-			return {
-				id,
+				return {
+					id,
+				}
 			}
 		},
 		async transform(content, id) {
