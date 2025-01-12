@@ -21,8 +21,8 @@ importers:
   packages/example:
     devDependencies:
       '@gleam-tools/ts':
-        specifier: file:../ts/gleam-tools-ts-0.0.1.tgz
-        version: file:packages/ts/gleam-tools-ts-0.0.1.tgz
+        specifier: link:../ts
+        version: link:../ts
       '@gleam-tools/vite':
         specifier: link:../vite
         version: link:../vite
@@ -40,7 +40,7 @@ importers:
     dependencies:
       '@gleam-tools/utils':
         specifier: ^0.0.4
-        version: link:../utils
+        version: 0.0.4
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -101,17 +101,14 @@ importers:
   packages/vite:
     dependencies:
       '@gleam-tools/utils':
-        specifier: ^0.0.3
-        version: 0.0.3
+        specifier: ^0.0.4
+        version: 0.0.4
       magic-string:
         specifier: ^0.30.17
         version: 0.30.17
       toml:
         specifier: ^3.0.0
         version: 3.0.0
-      vite:
-        specifier: ^6.0.7
-        version: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(yaml@2.3.1)
     devDependencies:
       '@types/node':
         specifier: ^22.10.5
@@ -140,6 +137,9 @@ importers:
       unbuild:
         specifier: ^3.2.0
         version: 3.2.0(typescript@5.7.3)
+      vite:
+        specifier: ^6.0.7
+        version: 6.0.7(@types/node@22.10.5)(jiti@2.4.2)(yaml@2.3.1)
       vitest:
         specifier: ^2.1.8
         version: 2.1.8(@types/node@22.10.5)
@@ -147,8 +147,8 @@ importers:
   packages/vscode:
     dependencies:
       '@gleam-tools/ts':
-        specifier: file:../ts/gleam-tools-ts-0.0.1.tgz
-        version: file:packages/ts/gleam-tools-ts-0.0.1.tgz
+        specifier: link:../../ts
+        version: link:../../ts
 
 packages:
 
@@ -782,15 +782,8 @@ packages:
     resolution: {integrity: sha512-zSkKow6H5Kdm0ZUQUB2kV5JIXqoG0+uH5YADhaEHswm664N9Db8dXSi0nMJpacpMf+MyyglF1vnZohpEg5yUtg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gleam-tools/ts@file:packages/ts/gleam-tools-ts-0.0.1.tgz':
-    resolution: {integrity: sha512-l+0TTRAj3XQAJTD+QOPzspTKUOnhdU58+BMsaPsx5GPmD0XbF7tXBNr/j/k657ANOtyf3OOVIWj0hRREf3FXag==, tarball: file:packages/ts/gleam-tools-ts-0.0.1.tgz}
-    version: 0.0.1
-
-  '@gleam-tools/utils@0.0.2':
-    resolution: {integrity: sha512-ia7qvA+antKndapuFj9J2I2peHTtdcHUInH1skseF/lyQw6+5Kuxce3TNUBBT3HdASt00ki+tdEGFIfZ7mJV+A==}
-
-  '@gleam-tools/utils@0.0.3':
-    resolution: {integrity: sha512-3lYQdhA+LEntux38beFFJudMCn+RDQJAB+B/n4jbtvM+DwEOdNeWOr7bthGMJEVFPBB8+ktbCid7rPKHTq1nWg==}
+  '@gleam-tools/utils@0.0.4':
+    resolution: {integrity: sha512-pe+p1yx0paiLpuJao7qv9hhZyx9DfYcawn5urVlsW1pIsjI6rnQZaYBvW/Dlu9qbABYHMji1O4wWRUfzl3UCAQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4534,16 +4527,7 @@ snapshots:
     dependencies:
       levn: 0.4.1
 
-  '@gleam-tools/ts@file:packages/ts/gleam-tools-ts-0.0.1.tgz':
-    dependencies:
-      '@gleam-tools/utils': 0.0.2
-      typescript: 5.7.3
-
-  '@gleam-tools/utils@0.0.2':
-    dependencies:
-      toml: 3.0.0
-
-  '@gleam-tools/utils@0.0.3':
+  '@gleam-tools/utils@0.0.4':
     dependencies:
       toml: 3.0.0
 

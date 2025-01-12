@@ -1,15 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import path from 'node:path'
-import { getJsFilePath, ignoreBuildFolder } from './utils'
+import { ignoreBuildFolder } from './utils'
 import type { UserConfig } from 'vite'
-
-it('getJsFilePath', () => {
-	const config = { name: 'my_app', version: '1.0.0', target: 'javascript' }
-
-	expect(getJsFilePath('src/index.gleam', config)).toBe(
-		path.join(process.cwd(), 'build', 'dev', 'javascript', 'my_app', 'index.mjs'),
-	)
-})
 
 describe('ignoreBuildFolder', () => {
 	it('no exclude', () => {

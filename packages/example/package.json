@@ -10,7 +10,7 @@
 		"format": "prettier -w packages/*/src"
 	},
 	"devDependencies": {
-		"@gleam-tools/ts": "file:../ts/gleam-tools-ts-0.0.1.tgz",
+		"@gleam-tools/ts": "link:../ts",
 		"@gleam-tools/vite": "link:../vite",
 		"typescript": "^5.0.2",
 		"vite": "^4.4.5",
