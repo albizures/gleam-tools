@@ -1,6 +1,6 @@
 {
 	"name": "@gleam-tools/utils",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Common utilities for Gleam Tools",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",

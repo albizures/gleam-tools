@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/albizures/gleam-tools/compare/utils-0.0.3...utils-0.0.4) (2025-01-12)
+
+
+### Bug Fixes
+
+* get path inside of the function to get the latest root ([d7facb5](https://github.com/albizures/gleam-tools/commit/d7facb5e45510bb7cf959d84f8a5e5f3d14b3959))
+
 ### 0.0.3 (2025-01-11)
 
 
