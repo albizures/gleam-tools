@@ -1,7 +1,7 @@
 {
 	"name": "@gleam-tools/vite",
 	"type": "module",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Import directly from *.gleam files using Vite",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",
