@@ -3,9 +3,9 @@ import { getDtsSnapshot } from '../utils'
 import type { Context } from '../context'
 
 export function decorateScriptSnapshot(context: Context): void {
-	const { ts, info, logger, gleamConfig, languageServiceHost } = context
+	const { ts, logger, gleamConfig, languageServiceHost } = context
 
-	const getScriptSnapshot = info.languageServiceHost.getScriptSnapshot
+	const getScriptSnapshot = languageServiceHost.getScriptSnapshot.bind(languageServiceHost)
 	languageServiceHost.getScriptSnapshot = (fileName) => {
 		if (isGleamFile(fileName)) {
 			const dts = getDtsSnapshot(ts, gleamConfig, fileName, logger)
