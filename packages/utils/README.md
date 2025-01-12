@@ -11,6 +11,9 @@ Assert function
 ### isGleamFile
 Check if a file is a Gleam file
 
+### isJsFile
+Check if a file is a JavaScript file
+
 ### readJsFile
 Read a Gleam file and return its content
 
