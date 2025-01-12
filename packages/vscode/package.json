@@ -24,6 +24,6 @@
 		]
 	},
 	"dependencies": {
-		"@gleam-tools/ts": "^0.0.2"
+		"@gleam-tools/ts": "^0.0.3"
 	}
 }
