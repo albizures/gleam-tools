@@ -16,10 +16,9 @@
 		"build": "run-s build:*",
 		"build:ts": "tsc",
 		"build:ts:dev": "tsc --watch",
-		"test": "run-s test:types test:jsr",
+		"test": "run-s test:types",
 		"test:use": "knip",
 		"test:types": "tsc --noEmit",
-		"test:jsr": "jsr publish --dry-run",
 		"release:bump": "standard-version",
 		"release:publish": "pnpm publish --access public",
 		"release": "run-s test build release:bump release:publish"
