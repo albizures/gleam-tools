@@ -1,7 +1,7 @@
 {
 	"name": "@gleam-tools/ts",
 	"type": "commonjs",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "get type safety when importing .gleam from javascript",
 	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"license": "MIT",

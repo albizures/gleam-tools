@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/albizures/gleam-tools/compare/v0.0.3...v0.0.4) (2025-01-12)
+
+
+### Features
+
+* bind getScriptSnapshot ([f3a19a2](https://github.com/albizures/gleam-tools/commit/f3a19a239350caaadb202710c6dcf3078f1b797e))
+
 ### [0.0.3](https://github.com/albizures/gleam-tools/compare/v0.0.2...v0.0.3) (2025-01-12)
 
 ### 0.0.2 (2025-01-12)
