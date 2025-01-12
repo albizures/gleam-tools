@@ -1,8 +1,10 @@
 {
+	"publisher": "albizures",
 	"name": "gleam-ts",
-	"displayName": "Gleam TS",
+	"displayName": "Gleam TS Plugin",
 	"version": "0.0.1",
 	"description": "Support import gleam files into typescript",
+	"author": "Jose Albizures <jose@albizures.com> (https://albizures.com/)",
 	"repository": "https://github.com/albizures/gleam-tools/tree/main/packages/vscode",
 	"categories": [
 		"Extension Packs"
