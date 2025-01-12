@@ -1,8 +1,12 @@
 import process from 'node:process'
-import path from 'node:path'
-import { getDeclarationFilePath, getJsFilePath, isGleamFile, readSyncGleamConfig } from '@gleam-tools/utils'
 import type tsModule from 'typescript/lib/tsserverlibrary.js'
-import { getDtsSnapshot, hasDeclaration } from './utils'
+import { isGleamFile, readSyncGleamConfig } from '@gleam-tools/utils'
+import { createContext } from './context'
+import { decorateScriptSnapshot } from './decorators/script-snapshot'
+import { decorateResolveModuleNameLiterals } from './decorators/resolve-module-name-literals'
+import { decorateNavigateToItems } from './decorators/navigate-to-items'
+import { decorateFileReferences } from './decorators/file-references'
+import { decorateDefinitionAndBountSpan } from './decorators/definition-and-bound-span'
 
 function safeReadGleamConfig(logger: tsModule.server.Logger) {
 	try {
@@ -14,38 +18,37 @@ function safeReadGleamConfig(logger: tsModule.server.Logger) {
 	}
 }
 
-// eslint-disable-next-line no-restricted-syntax
-export = function init(modules: {
+type InitArgs = {
 	typescript: typeof tsModule
-}) {
-	const ts = modules.typescript
+}
+
+// eslint-disable-next-line no-restricted-syntax
+export = function init(args: InitArgs): tsModule.server.PluginModule {
+	const ts = args.typescript
 	function create(info: tsModule.server.PluginCreateInfo) {
 		const { logger } = info.project.projectService
 
-		logger.info('[ts-gleam] initializing ts-gleam')
+		logger.info('[ts-gleam] initializing ts-gleam :) 1')
 
 		const directory = info.project.getCurrentDirectory()
 		process.chdir(directory)
 
-		const languageServiceHost: Partial<tsModule.LanguageServiceHost> = {}
-		const languageServiceHostProxy = new Proxy(info.languageServiceHost, {
-			get(target, key: keyof tsModule.LanguageServiceHost) {
-				return languageServiceHost[key]
-					? languageServiceHost[key]
-					: target[key]
-			},
-		})
-
-		const languageService = ts.createLanguageService(languageServiceHostProxy)
-
-		logger.info('[ts-gleam] reading gleam.toml file')
+		logger.info(`[ts-gleam] reading gleam.toml file ${directory}`)
 		const gleamConfig = safeReadGleamConfig(logger)
 
 		if (!gleamConfig) {
 			logger.info('[ts-gleam] ERROR | gleam.toml not found')
-			return languageService
+			return info.languageService
 		}
 
+		const context = createContext(
+			ts,
+			info,
+			gleamConfig,
+		)
+		const { languageService } = context
+
+		// TODO: move this into utils
 		if (
 			typeof gleamConfig.javascript !== 'object'
 			|| (gleamConfig.javascript).typescript_declarations !== true
@@ -54,89 +57,12 @@ export = function init(modules: {
 			return languageService
 		}
 
-		languageServiceHost.getScriptKind = (fileName) => {
-			if (!info.languageServiceHost.getScriptKind) {
-				return ts.ScriptKind.Unknown
-			}
-
-			if (
-				isGleamFile(fileName)
-				&& hasDeclaration(fileName, gleamConfig, logger)
-			) {
-				return ts.ScriptKind.TS
-			}
-			return info.languageServiceHost.getScriptKind(fileName)
-		}
-
-		languageServiceHost.getScriptSnapshot = (fileName) => {
-			if (
-				isGleamFile(fileName)
-				&& hasDeclaration(fileName, gleamConfig, logger)
-			) {
-				const dts = getDtsSnapshot(ts, gleamConfig, fileName, logger)
-				return dts
-			}
-			return info.languageServiceHost.getScriptSnapshot(fileName)
-		}
-
-		function createModuleResolver(containingFile: string) {
-			return (
-				moduleName: tsModule.StringLiteralLike,
-				_resolveModule: () =>
-					| tsModule.ResolvedModuleWithFailedLookupLocations
-					| undefined,
-			): tsModule.ResolvedModuleFull | undefined => {
-				if (isGleamFile(moduleName.text)) {
-					const p = path.resolve(path.dirname(containingFile), moduleName.text)
-
-					return {
-						extension: ts.Extension.Dts,
-						isExternalLibraryImport: false,
-						resolvedFileName: path.join(process.cwd(), getDeclarationFilePath(p, gleamConfig!)),
-					}
-				}
-			}
-		}
-
-		if (info.languageServiceHost.resolveModuleNameLiterals) {
-			const resolveModuleNameLiterals = info.languageServiceHost.resolveModuleNameLiterals!.bind(
-				info.languageServiceHost,
-			)
-			languageServiceHost.resolveModuleNameLiterals = (
-				modulesLiterals,
-				containingFile,
-				...rest
-			) => {
-				const resolvedModules = resolveModuleNameLiterals(
-					modulesLiterals,
-					containingFile,
-					...rest,
-				)
-
-				const moduleResolver = createModuleResolver(containingFile)
-
-				return modulesLiterals.map((moduleName, index) => {
-					try {
-						const resolvedModule = moduleResolver(
-							moduleName,
-							() =>
-								languageServiceHost.getResolvedModuleWithFailedLookupLocationsFromCache?.(
-									moduleName.text,
-									containingFile,
-								),
-						)
-						if (resolvedModule) {
-							return { resolvedModule }
-						}
-					}
-					catch (error) {
-						logger.info(`[ts-gleam] ERR: ${error}`)
-						return resolvedModules[index]
-					}
-					return resolvedModules[index]
-				})
-			}
-		}
+		decorateScriptSnapshot(context)
+		decorateResolveModuleNameLiterals(context)
+		decorateNavigateToItems(context)
+		decorateFileReferences(context)
+		decorateFileReferences(context)
+		decorateDefinitionAndBountSpan(context)
 
 		return languageService
 	}
