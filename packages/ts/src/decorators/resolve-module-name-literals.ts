@@ -1,5 +1,4 @@
 import path from 'node:path'
-
 import { isGleamFile } from '@gleam-tools/utils'
 import type { Context } from '../context'
 import type tsModule from 'typescript/lib/tsserverlibrary'

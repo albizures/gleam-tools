@@ -29,7 +29,7 @@
 		"release": "run-s test build release:jsr-sync release:bump release:publish"
 	},
 	"dependencies": {
-		"@gleam-tools/utils": "^0.0.3",
+		"@gleam-tools/utils": "^0.0.4",
 		"typescript": "^5.7.3"
 	},
 	"devDependencies": {
